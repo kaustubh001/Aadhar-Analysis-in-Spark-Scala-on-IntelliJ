@@ -1,0 +1,25 @@
+import org.apache.spark.sql.SQLContext
+import org.apache.spark.{SparkConf, SparkContext}
+object ReadCSVFile {
+  System.setProperty("hadoop.home.dir", "C:\\xx\\yy\\zz\\Hadoop\\")
+  // Set the path for the Hadoop Directory. mke sure you use Environment variables to edit the path.
+  case class Inception(Registrar: String, EnrolmentAgency: String, State: String, District: String, SubDistrict: String, PinCode: String, Gender: String, Age: String, AadharGenerated: String, ER: String, Rem: String, Rno: String)
+  def main(args : Array[String]): Unit = {
+    var conf = new SparkConf().setAppName("Read CSV File").setMaster("local[*]")
+    val sc = new SparkContext(conf)
+    val sqlContext = new SQLContext(sc)
+    import sqlContext.implicits._
+    import org.apache.spark.sql._
+    val textRDD = sc.textFile("C:\\xx\\yy\\Aadhar.csv")
+
+    val empRdd = textRDD.map {
+      line =>
+        val col = line.split(",")
+        Inception(col(0), col(1), col(2), col(3), col(4), col(5), col(6), col(7), col(8), col(9), col(10), col(11))
+    }
+    val empDF = empRdd.toDF()
+    empDF.show()
+
+
+  }
+}
