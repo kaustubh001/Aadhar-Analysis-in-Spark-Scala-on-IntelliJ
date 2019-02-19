@@ -20,8 +20,8 @@ object ReadCSVFile {
     val empDF = empRdd.toDF()
     empDF.show()
     // We created the RDD and then converted it into DataFrame. 
-    // For SQL Quering, create the temp table
-    // Happy Analyzing
+    // For SQL Quering, create the temp table.
+    // Happy Analyzing.
 
 
   }
